@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/useAuth';
 
@@ -14,12 +12,6 @@ export const Layout = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isAuth) {
-      navigate('/login');
-    }
-  }, [navigate, isAuth]);
-
   const activeStyles = {
     color: 'white',
   };
@@ -27,52 +19,32 @@ export const Layout = ({ children }) => {
   const handleLogout = () => {
     dispatch(logout());
     window.localStorage.removeItem('token');
-    toast.success;
+    navigate('/login');
   };
 
   return (
     <div className={styles.wrapper}>
       {isAuth ? (
-        <div>
-          <div>Blog</div>
+        <div className={styles.header}>
+          <NavLink
+            to='/'
+            href='/'
+            style={({ isActive }) => (isActive ? activeStyles : undefined)}
+          >
+            Blog
+          </NavLink>
 
-          <ul>
-            <li>
-              <NavLink
-                to='/'
-                href='/'
-                style={({ isActive }) => (isActive ? activeStyles : undefined)}
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to='/posts'
-                href='/'
-                style={({ isActive }) => (isActive ? activeStyles : undefined)}
-              >
-                Posts
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to='/new'
-                href='/'
-                style={({ isActive }) => (isActive ? activeStyles : undefined)}
-              >
-                Add post
-              </NavLink>
-            </li>
-          </ul>
+          <NavLink
+            to='/new'
+            href='/'
+            style={({ isActive }) => (isActive ? activeStyles : undefined)}
+          >
+            Add post
+          </NavLink>
 
-          <div>
-            {isAuth ? (
-              <button onClick={handleLogout}>Logout</button>
-            ) : (
-              <Link to='/login'>Login</Link>
-            )}
-          </div>
+          <NavLink to='/login' href='/' onClick={handleLogout}>
+            Login
+          </NavLink>
         </div>
       ) : null}
 
