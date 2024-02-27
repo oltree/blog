@@ -4,6 +4,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import authRoute from './routes/auth.js';
+import commentRoute from './routes/comments.js';
+import postRoute from './routes/posts.js';
 
 const app = express();
 dotenv.config();
@@ -17,6 +19,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoute);
+app.use('/api/posts', postRoute);
+app.use('/api/comments', commentRoute);
 
 async function start() {
   try {
