@@ -43,7 +43,7 @@ export const Layout = ({ children }) => {
           </NavLink>
 
           <NavLink to='/login' href='/' onClick={handleLogout}>
-            Login
+            Logout
           </NavLink>
         </div>
       ) : null}
